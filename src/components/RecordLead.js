@@ -11,6 +11,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import UserInfoA from './UserInfoA';
+import Grid from '@material-ui/core/Grid';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,18 +24,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+    return ['User details', 'Property Info', 'Services', 'Devices'];
 }
 
 function getStepContent(step) {
 
     switch (step) {
         case 0:
-            return <UserInfoA/>;
+            return <UserInfoA />;
         case 1:
-            return 'Step 2: What is an ad group anyways?';
+            return 'Step 2: Property Info';
         case 2:
-            return 'Step 3: This is the bit I really care about!';
+            return 'Step 3: Services';
+        case 3:
+            return 'Step 4: Devices';
         default:
             return 'Unknown step';
     }
@@ -71,6 +75,7 @@ function RecordLead(props) {
                     </Step>
                 ))}
             </Stepper>
+            <br />
             <div>
                 {activeStep === steps.length ? (
                     <div>
@@ -79,22 +84,42 @@ function RecordLead(props) {
                     </div>
                 ) : (
                         <div>
-                            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+
                             <div>
-                                <Button
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    className={classes.backButton}
-                                >
-                                    Back
-              </Button>
-                                <Button variant="contained" color="primary" onClick={handleNext}>
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                </Button>
+                                <Grid container justify="flex-end" item xs={12}>
+
+
+                                    <Button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                        className={classes.backButton}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button variant="contained" color="primary" onClick={handleNext}>
+                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    </Button>
+                                </Grid>
+                                <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                                <Grid container justify="flex-end" item xs={12}>
+
+
+                                    <Button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                        className={classes.backButton}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button variant="contained" color="primary" onClick={handleNext}>
+                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    </Button>
+                                </Grid>
                             </div>
                         </div>
                     )}
             </div>
+
         </div>
     );
 }

@@ -2,14 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Main from './components/Main'
+import Main from './components/Main';
+import {Example} from './pdf/ComponentCall'
 import reportWebVitals from './reportWebVitals';
 // import 'bootstrap/dist/css/bootstrap.css';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main/>
+    <Example/>
   </React.StrictMode>,
   document.getElementById('root')
 );
