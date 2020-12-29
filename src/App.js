@@ -5,7 +5,7 @@
 //   CardText, CardTitle, CardSubtitle, Table, Modal
 // } from 'reactstrap';
 // import './App.css';
-// import ModalChoice from './Modal'
+// import ModalChoice from './components/Modal'
 // import BuildingType from './components/BuildingType'
 // import PackageType from './components/PackageType'
 // import LeftDrawer from './components/LeftDrawer'
@@ -220,30 +220,3 @@
 // }
 
 // export default App;
-
-
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
-
-function App() {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
-
-  return (
-    <div>
-      <Document
-        file="./Proposal Format.pdf"
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <p>Page {pageNumber} of {numPages}</p>
-    </div>
-  );
-}
-
-export default App;

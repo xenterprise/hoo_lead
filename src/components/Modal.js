@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Card, CardHeader, CardImg, Container, CardImgOverlay, CardTitle } from 'reactstrap';
-import './App.css';
+// import './App.css';
 
 const ModalChoice = (props) => {
     const {

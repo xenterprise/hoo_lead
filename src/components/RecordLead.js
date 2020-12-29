@@ -12,7 +12,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import UserInfoA from './UserInfoA';
 import Grid from '@material-ui/core/Grid';
-
+import PackageInfoA from './PackageInfoA';
+import ServicesInfoA from './ServicesInfoA';
+import DevicesInfoA from './DevicesInfoA';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,11 +35,11 @@ function getStepContent(step) {
         case 0:
             return <UserInfoA />;
         case 1:
-            return 'Step 2: Property Info';
+            return <PackageInfoA/>;
         case 2:
-            return 'Step 3: Services';
+            return <ServicesInfoA/>;
         case 3:
-            return 'Step 4: Devices';
+            return <DevicesInfoA/>;
         default:
             return 'Unknown step';
     }

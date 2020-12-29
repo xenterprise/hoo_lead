@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Main from './components/Main';
-import {Example} from './pdf/ComponentCall'
+import { Example } from './pdf/ComponentCall'
 import reportWebVitals from './reportWebVitals';
 // import 'bootstrap/dist/css/bootstrap.css';
-
+import { LeadContextProvider } from './context/LeadContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Example/>
+    <LeadContextProvider>
+      <Main />
+    </LeadContextProvider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
