@@ -15,6 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import PackageInfoA from './PackageInfoA';
 import ServicesInfoA from './ServicesInfoA';
 import DevicesInfoA from './DevicesInfoA';
+import { red, grey } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,11 +37,11 @@ function getStepContent(step) {
         case 0:
             return <UserInfoA />;
         case 1:
-            return <PackageInfoA/>;
+            return <PackageInfoA />;
         case 2:
-            return <ServicesInfoA/>;
+            return <ServicesInfoA />;
         case 3:
-            return <DevicesInfoA/>;
+            return <DevicesInfoA />;
         default:
             return 'Unknown step';
     }
@@ -70,7 +72,7 @@ function RecordLead(props) {
     };
     return (
         <div>
-            <Stepper activeStep={activeStep} alternativeLabel>
+            <Stepper activeStep={activeStep} alternativeLabel className={classes.stepper}>
                 {steps.map((label) => (
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>

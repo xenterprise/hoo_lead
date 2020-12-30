@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
-import {
-  Row, Col, Container, Card, CardHeader, CardBody,
-  Button, ButtonGroup, CardImg, CardImgOverlay,
-  CardText, CardTitle, CardSubtitle, Table, Modal
-} from 'reactstrap';
-// import './App.css';
 import ModalChoice from './Modal'
 import BuildingType from './BuildingType'
 import PackageType from './PackageType'
 import LeftDrawer from './LeftDrawer'
-// import us from './styles/Classes'
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import { red, grey, blue } from '@material-ui/core/colors';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import Table from '@material-ui/core/Table';
+import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Button from '@material-ui/core/Button'
+import { LeadContext } from '../context/LeadContext'
+import { useContext, useState } from 'react';
+
 
 var tempDeviceCount, tempRoomCount
 
@@ -54,169 +69,140 @@ const preMatrix_Studio_Base = [
 ]
 var preRoomsCount_Studio = [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1]
 
+const useStyles = makeStyles((theme) => ({
+  gridRoot: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '40ch',
+    },
 
+  },
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+  header: {
+    backgroundColor: grey[400],
+  },
+  avatar: {
+    backgroundColor: grey[600],
+  },
+  addButton: {
+    backgroundColor: grey[500],
+    color: grey[800],
+  },
+  buttonGroup: {
+    alignItems: 'center',
+  }
+}));
 
+function Display() {
+  const classes = useStyles();
+  const [state, dispatch] = useContext(LeadContext)
 
-function Display(props) {
   return (
-    <div>
-      <Container>
-        <Row>
-          {
-            Object.keys(props.this.state.matrix).map((room, room_id) => (
-              //props.this.state.user.social[item].link
-              props.this.state.roomsCount[room_id] ?
-                <Col key={room_id} xs="12" sm="6" md="4">
-                  <Card>
-                    <CardHeader style={{ backgroundColor: '#333', borderColor: '#333', color: '#fff' }}>
-                      <CardImg width="50px" src={`Picture${room_id}.png`} alt="Card image cap" style={{ paddingTop: '0%', paddingLeft: '53%', paddingRight: '1%', paddingBottom: '0%' }} />
-                    </CardHeader>
-                    <CardImgOverlay style={{ color: '#fff' }}>
-                      <CardTitle tag="h5">{props.this.state.roomNames[room_id]}</CardTitle>
-                      <CardTitle tag="h1">{`x${props.this.state.roomsCount[room_id]}`}</CardTitle>
-                    </CardImgOverlay>
-                    <div className="text-center" style={{ backgroundColor: '#333', borderColor: '#333', color: '#fff', paddingTop: '0%', paddingBottom: '2%' }}>
-                      <ButtonGroup >
-                        <Button onClick={() => props.this.subtractRoom(room_id)}>-</Button>
-                        <Button onClick={() => props.this.addRoom(room_id)}>+</Button>
-                      </ButtonGroup>
-                    </div>
-                    <Table striped size="sm" className="text-center" >
+    <Grid className={classes.gridRoot}
+      container
+      spacing={0}
+      direction="row"
+      justify="center"
+    >
+      {
+        Object.keys(state.matrix).map((room, room_id) => (
+          state.roomsCount[room_id] ?
+            <Grid item>
+              <Card className={classes.root} >
+                <CardHeader className={classes.header}
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      <img src={`Picture${room_id}.png`} width="20px" />
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton component="span" aria-label="settings" size="small" className={classes.addButton}>
+                      <AddIcon />
+                    </IconButton>
+                  }
+                  title={state.roomNames[room_id]}
+                  subheader={`x${state.roomsCount[room_id]}`}
+                />
+                <CardActionArea>
+                  <CardContent>
+                    <ButtonGroup justify="center" variant="contained" aria-label="contained button group" align="center" className={classes.buttonGroup}>
+                      <Button component="span" aria-label="settings" size="small" className={classes.addButton} onClick={(e)=>{dispatch({type: 'SUB_ROOM_COUNT', val: room_id })}}>
+                        <RemoveIcon />
+                      </Button>
+                      <Button component="span" aria-label="settings" size="small" className={classes.addButton} onClick={(e)=>{dispatch({type: 'ADD_ROOM_COUNT', val: room_id })}}>
+                        <AddIcon />
+                      </Button>
+                    </ButtonGroup>
+                    <br />
+                    <Table className={classes.table} size="small" aria-label="a dense table">
                       {
-                        Object.keys(props.this.state.matrix[room_id]).map((devices, device_id) => (
-                          props.this.state.matrix[room_id][device_id] ?
-                            <tr key={device_id}>
-                              <td><img src={`icon${device_id}.png`} width="20px" /></td>
-                              <td>{props.this.state.deviceNames[device_id]}</td>
-                              <td>{`x${props.this.state.matrix[room_id][device_id]}`}</td>
+                        Object.keys(state.matrix[room_id]).map((devices, device_id) => (
+                          state.matrix[room_id][device_id] ?
+                            <TableRow key={device_id}>
+                              <TableCell><img src={`icon${device_id}.png`} width="20px" /></TableCell>
+                              <TableCell>{state.deviceNames[device_id]}</TableCell>
+                              <TableCell>{`x${state.matrix[room_id][device_id]}`}</TableCell>
                               <td>
-                                <ButtonGroup size="sm">
-                                  <Button onClick={() => props.this.subtractDevice(room_id, device_id)}>-</Button>
-                                  <Button onClick={() => props.this.addDevice(room_id, device_id)}>+</Button>
+                                <ButtonGroup variant="contained" aria-label="contained  button group" align="center" className={classes.buttonGroup}>
+                                  <Button component="span" aria-label="settings" size="small" onClick={(e)=>{dispatch({type: 'SUB_DEVICE_COUNT', val: {room_id, device_id} })}} className={classes.addButton} >
+                                    <RemoveIcon />
+                                  </Button>
+                                  <Button component="span" aria-label="settings" size="small" onClick={(e)=>{dispatch({type: 'ADD_DEVICE_COUNT', val: {room_id, device_id} })}} className={classes.addButton}>
+                                    <AddIcon />
+                                  </Button>
                                 </ButtonGroup>
                               </td>
-                            </tr>
+                            </TableRow>
                             : null
                         ))
                       }
                     </Table>
-                  </Card>
-                  <br />
-                </Col>
-                : null
-            ))
-          }
-        </Row>
-      </Container>
-    </div>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+
+            : null
+        ))
+      }
+    </Grid>
   )
 }
 
-class DevicesInfoA extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      matrix: new Array(11).fill(0).map(() => new Array(13).fill(2)),
-      roomNames: ['Bathroom', 'Lounge', 'Bedroom', 'Lobby', 'Drawing', 'Dining', 'Kitchen', 'Porch', 'Stairs', 'Lawn', 'Addons'],
-      deviceNames: ['Switch', 'Motion', 'Dimmer', 'Socket', 'Curtain', 'Door Lock', 'Door Sensor', 'Gas Leak', 'Window', 'Breaker', 'Scene Switch', 'Fire Sensor', 'Meter'],
-      
-      roomsCount: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      current_BuildingType: 0,
-      current_PackageType: 0,
-      current_buildingTypeLabel: 'Studio Apartment',
-      current_packageTypeLabel: 'Gold',
-    }
-
-    this.subtractDevice = this.subtractDevice.bind(this)
-    this.addDevice = this.addDevice.bind(this)
-    this.subtractRoom = this.subtractRoom.bind(this)
-    this.addRoom = this.addRoom.bind(this)
-    this.selectBuildingType = this.selectBuildingType.bind(this)
-    this.selectPackageType = this.selectPackageType.bind(this)
-    this.setDefaults = this.setDefaults.bind(this)
-  }
-
-  subtractDevice(room_id, device_id) {
-    tempDeviceCount = this.state.matrix
-    tempDeviceCount[room_id][device_id]--
-
-    this.setState(state => ({
-      ...state,
-      matrix: tempDeviceCount
-    }))
-  }
-
-  addDevice(room_id, device_id) {
-    tempDeviceCount = this.state.matrix
-    tempDeviceCount[room_id][device_id]++
-
-    this.setState(state => ({
-      ...state,
-      matrix: tempDeviceCount
-    }))
-  }
-
-  subtractRoom(room_id) {
-    tempRoomCount = this.state.roomsCount
-    tempRoomCount[room_id]--
-
-    this.setState(state => ({
-      ...state,
-      roomsCount: tempRoomCount
-    }))
-  }
-
-  addRoom(room_id) {
-    tempRoomCount = this.state.roomsCount
-    tempRoomCount[room_id]++
-
-    this.setState(state => ({
-      ...state,
-      roomsCount: tempRoomCount
-    }))
-  }
-
-  selectBuildingType(buildingType, label) {
-    this.setState({
-      current_BuildingType: buildingType,
-      current_buildingTypeLabel: label
-    }, () => this.setDefaults)
-  }
-
-  selectPackageType(packageType, label) {
-    this.setState({
-      current_PackageType: packageType,
-      current_packageTypeLabel: label
-    }, () => this.setDefaults)
-  }
-
-  setDefaults(buildingType, PackageType) {
-    // this.setState(state => ({
-    //   ...state,
-    //   matrix: preMatrix_Studio_Gold
-    // }))
-    console.log("Defaults Set after Type Change")
-  }
-
-  render() {
-    return (
-      <div >
-        <LeftDrawer/>
-        <br />
-        
-        <Container >
-          <Row>
-            <BuildingType this={this} />
-            <PackageType this={this} />
-            <ModalChoice this={this} />
-          </Row>
-        </Container>
-        <br />
-        <Display this={this} />
-      </div>
-    );
-  }
+const xstate = {
+  current_BuildingType: 0,
+  current_PackageType: 0,
+  current_buildingTypeLabel: 'Studio Apartment',
+  current_packageTypeLabel: 'Gold',
 }
 
-export default DevicesInfoA;
+const selectBuildingType = (buildingType, label) => {
+  this.setState({
+    current_BuildingType: buildingType,
+    current_buildingTypeLabel: label
+  }, () => this.setDefaults)
+}
+
+const selectPackageType = (packageType, label) => {
+  this.setState({
+    current_PackageType: packageType,
+    current_packageTypeLabel: label
+  }, () => this.setDefaults)
+}
+
+const setDefaults = (buildingType, PackageType) => {
+  console.log("Defaults Set after Type Change")
+}
+
+export default function DevicesInfoA() {
+  const classes = useStyles();
+  const [state, dispatch] = useContext(LeadContext)
+  return (
+    <Display />
+  );
+}
