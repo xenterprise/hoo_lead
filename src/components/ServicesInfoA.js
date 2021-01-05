@@ -35,8 +35,8 @@ export default function ServicesInfoA() {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={state.checkedB}
-                            // onChange={handleChange}
+                            checked={state.check_ambiance}
+                            onChange={(e)=>{dispatch({type: state.check_ambiance?"REMOVE_SERVICE":"ADD_SERVICE", val: 0 })}}
                             name="checkedB"
                             color="primary"
                         />
@@ -48,8 +48,8 @@ export default function ServicesInfoA() {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={state.checkedB}
-                            // onChange={handleChange}
+                            checked={state.check_security}
+                            onChange={(e)=>{dispatch({type: state.check_security?"REMOVE_SERVICE":"ADD_SERVICE", val: 1 })}}
                             name="checkedB"
                             color="primary"
                         />
@@ -61,8 +61,8 @@ export default function ServicesInfoA() {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={state.checkedB}
-                            // onChange={handleChange}
+                            checked={state.check_energy}
+                            onChange={(e)=>{dispatch({type: state.check_energy?"REMOVE_SERVICE":"ADD_SERVICE", val: 2 })}}
                             name="checkedB"
                             color="primary"
                         />
@@ -74,8 +74,8 @@ export default function ServicesInfoA() {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={state.checkedB}
-                            // onChange={handleChange}
+                            checked={state.check_health}
+                            onChange={(e)=>{dispatch({type: state.check_health?"REMOVE_SERVICE":"ADD_SERVICE", val: 3 })}}
                             name="checkedB"
                             color="primary"
                         />

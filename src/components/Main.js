@@ -50,7 +50,7 @@ export default function Main() {
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Testing
+            Leads Manager
           </Typography>
         </Toolbar>
       </AppBar>
